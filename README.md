@@ -41,6 +41,7 @@ app
         - AndroidManifest.xml
 
 ```
+Refer to example project: https://github.com/YasuChiba/ros2-android-test-app
 
 ## Note  
 Build `ros2_android` and `ros2_android_examples` by this Dockerfile is currently not supported.  
