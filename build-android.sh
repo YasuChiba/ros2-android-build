@@ -32,8 +32,7 @@ colcon build \
     -DCMAKE_FIND_ROOT_PATH="${PWD}/install" \
     -DBUILD_TESTING=OFF \
     -DRCL_LOGGING_IMPLEMENTATION=rcl_logging_noop \
-    -DTHIRDPARTY_android-ifaddrs=FORCE
-
+    -DTHIRDPARTY_android-ifaddrs=FORCE \
 
 
 # OUTPUT
