@@ -3,6 +3,17 @@
 Build rcljava for android.  
 
 
+## Versions & Envs
+
+- NDK:  android-ndk-r23b
+- ABI: arm64-v8a  
+- Android API Level(minSdkVersion): android-21
+
+## ROS2 java version  
+
+https://raw.githubusercontent.com/ros2-java/ros2_java/434e6f55253bfe2cb9ce34799fe548bbf4998d0e/ros2_java_android.repos
+
+
 ## Steps to build
 ```
 docker build -t ros2java-android-build ./
@@ -12,13 +23,14 @@ docker run -it --rm --net=host -v ${PWD}/output:/root/output ros2java-android-bu
 
 ```
 
+Build results are copied to `~/output` dir.  
 Copy `.so` file and `.jar` files to your android project. 
 
 ↓Android project structure example.  
 ```
 app
  -libs
-    - jar files
+    - .jar files
  - src
     - main
         - java
