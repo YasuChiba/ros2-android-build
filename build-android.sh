@@ -1,11 +1,21 @@
 #!/bin/bash
+set -eu
 
 cd /root/workspace
-vcs import --input ./ros2_java_android.repos src
 
 export PYTHON3_EXEC="$( which python3 )"
 export PYTHON3_LIBRARY="$( ${PYTHON3_EXEC} -c 'import os.path; from distutils import sysconfig; print(os.path.realpath(os.path.join(sysconfig.get_config_var("LIBPL"), sysconfig.get_config_var("LDLIBRARY"))))' )"
 export PYTHON3_INCLUDE_DIR="$( ${PYTHON3_EXEC} -c 'from distutils import sysconfig; print(sysconfig.get_config_var("INCLUDEPY"))' )"
+
+
+wget -O /root/workspace/ros2_java_android.repos https://raw.githubusercontent.com/ros2-java/ros2_java/434e6f55253bfe2cb9ce34799fe548bbf4998d0e/ros2_java_android.repos
+# add spdlog
+echo "  ros2/spdlog_vendor:" >> /root/workspace/ros2_java_android.repos
+echo "    type: git" >> /root/workspace/ros2_java_android.repos
+echo "    url: https://github.com/ros2/spdlog_vendor.git" >> /root/workspace/ros2_java_android.repos
+echo "    version: galactic" >> /root/workspace/ros2_java_android.repos
+
+vcs import --input ./ros2_java_android.repos src
 
 colcon build \
     --packages-ignore cyclonedds rcl_logging_log4cxx rosidl_generator_py \
@@ -27,3 +37,18 @@ colcon build \
     -DCMAKE_FIND_ROOT_PATH="${PWD}/install" \
     -DBUILD_TESTING=OFF \
     -DTHIRDPARTY_android-ifaddrs=FORCE
+
+
+
+# OUTPUT
+rm -rf ~/output/sofiles
+rm -rf ~/output/jarfiles
+
+mkdir -p ~/output/sofiles
+mkdir -p ~/output/jarfiles
+
+find ./install -name "*.so" | while read t; do cp -p $t ~/output/sofiles/ ; done
+find ./install -name "*.jar" | while read t; do cp -p $t ~/output/jarfiles/ ; done
+
+# copy libc++_shared.so
+cp /opt/android/android-ndk-r23b/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/libc++_shared.so ~/output/sofiles
