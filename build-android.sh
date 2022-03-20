@@ -9,16 +9,11 @@ export PYTHON3_INCLUDE_DIR="$( ${PYTHON3_EXEC} -c 'from distutils import sysconf
 
 
 wget -O /root/workspace/ros2_java_android.repos https://raw.githubusercontent.com/ros2-java/ros2_java/434e6f55253bfe2cb9ce34799fe548bbf4998d0e/ros2_java_android.repos
-# add spdlog
-echo "  ros2/spdlog_vendor:" >> /root/workspace/ros2_java_android.repos
-echo "    type: git" >> /root/workspace/ros2_java_android.repos
-echo "    url: https://github.com/ros2/spdlog_vendor.git" >> /root/workspace/ros2_java_android.repos
-echo "    version: galactic" >> /root/workspace/ros2_java_android.repos
 
 vcs import --input ./ros2_java_android.repos src
 
 colcon build \
-    --packages-ignore cyclonedds rcl_logging_log4cxx rosidl_generator_py \
+    --packages-ignore cyclonedds rcl_logging_log4cxx rcl_logging_spdlog rosidl_generator_py \
     --packages-up-to rcljava \
     --cmake-args \
     -DPYTHON_EXECUTABLE=${PYTHON3_EXEC} \
@@ -36,6 +31,7 @@ colcon build \
     -DCOMPILE_EXAMPLES=OFF \
     -DCMAKE_FIND_ROOT_PATH="${PWD}/install" \
     -DBUILD_TESTING=OFF \
+    -DRCL_LOGGING_IMPLEMENTATION=rcl_logging_noop \
     -DTHIRDPARTY_android-ifaddrs=FORCE
 
 
