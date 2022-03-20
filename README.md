@@ -23,7 +23,7 @@ docker run -it --rm --net=host -v ${PWD}/output:/root/output ros2java-android-bu
 
 ```
 
-Build results are copied to `~/output` dir.  
+Build results are copied to `{PWD}/output` dir.  
 Copy `.so` file and `.jar` files to your android project. 
 
 ↓Android project structure example.  
@@ -41,3 +41,7 @@ app
         - AndroidManifest.xml
 
 ```
+
+## Note  
+Build `ros2_android` and `ros2_android_examples` by this Dockerfile is currently not supported.  
+Please build your android app by using Android Studio.
