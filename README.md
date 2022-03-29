@@ -15,17 +15,24 @@ https://raw.githubusercontent.com/ros2-java/ros2_java/434e6f55253bfe2cb9ce34799f
 
 
 ## Steps to build
+
+### 1. Build docker image
 ```
 docker build -t ros2java-android-build ./
-
-# without `--net=host`, vcs tools failed to fetch source code from github.
-docker run -it --rm --net=host -v ${PWD}/output:/root/output ros2java-android-build /root/workspace/build-android.sh
-
 ```
 
-Build results are copied to `{PWD}/output` dir.  
-Copy `.so` file and `.jar` files to your android project. 
+### 2. Build
+```
+python3 run.py ./out/soOut ./out/jarOut --srcDir ../src 
+```
+First and Second argument specifies where to copy build results.  
+Eg. Specify `libs` and `jniLibs` dir of your Android project to copy `.jar` file and `.so` files.  
 
+`--srcDir` option is using for adding packages other than ros2 java related packages, for example your own message package.  
+You can just specify your `src` dir which contains multiple packages. This option is not mandatory.
+
+
+## Note1   
 ↓Android project structure example.  
 ```
 app
@@ -43,6 +50,6 @@ app
 ```
 Refer to example project: https://github.com/YasuChiba/ros2-android-test-app
 
-## Note  
+## Note2 
 Build `ros2_android` and `ros2_android_examples` by this Dockerfile is currently not supported.  
 Please build your android app by using Android Studio.

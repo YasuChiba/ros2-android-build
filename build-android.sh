@@ -1,20 +1,14 @@
 #!/bin/bash
 set -eu
 
-cd /root/workspace
+cd /home/user/workspace
 
 export PYTHON3_EXEC="$( which python3 )"
 export PYTHON3_LIBRARY="$( ${PYTHON3_EXEC} -c 'import os.path; from distutils import sysconfig; print(os.path.realpath(os.path.join(sysconfig.get_config_var("LIBPL"), sysconfig.get_config_var("LDLIBRARY"))))' )"
 export PYTHON3_INCLUDE_DIR="$( ${PYTHON3_EXEC} -c 'from distutils import sysconfig; print(sysconfig.get_config_var("INCLUDEPY"))' )"
 
-
-wget -O /root/workspace/ros2_java_android.repos https://raw.githubusercontent.com/ros2-java/ros2_java/434e6f55253bfe2cb9ce34799fe548bbf4998d0e/ros2_java_android.repos
-
-vcs import --input ./ros2_java_android.repos src
-
 colcon build \
-    --packages-ignore cyclonedds rcl_logging_log4cxx rcl_logging_spdlog rosidl_generator_py \
-    --packages-up-to rcljava \
+    --packages-ignore cyclonedds rcl_logging_log4cxx rcl_logging_spdlog rosidl_generator_py rclandroid ros2_talker_android ros2_listener_android \
     --cmake-args \
     -DPYTHON_EXECUTABLE=${PYTHON3_EXEC} \
     -DPYTHON_LIBRARY=${PYTHON3_LIBRARY} \
@@ -34,16 +28,5 @@ colcon build \
     -DRCL_LOGGING_IMPLEMENTATION=rcl_logging_noop \
     -DTHIRDPARTY_android-ifaddrs=FORCE
 
-
-# OUTPUT
-rm -rf ~/output/sofiles
-rm -rf ~/output/jarfiles
-
-mkdir -p ~/output/sofiles
-mkdir -p ~/output/jarfiles
-
-find ./install -name "*.so" | while read t; do cp -p $t ~/output/sofiles/ ; done
-find ./install -name "*.jar" | while read t; do cp -p $t ~/output/jarfiles/ ; done
-
-# copy libc++_shared.so
-cp /opt/android/android-ndk-r23b/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/libc++_shared.so ~/output/sofiles
+## copy libc++_shared.so
+cp /opt/android/android-ndk-r23b/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/libc++_shared.so /home/user/workspace
