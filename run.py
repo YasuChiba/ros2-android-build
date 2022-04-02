@@ -73,7 +73,7 @@ def output(workspacePath: pathlib.Path, soOutPath: pathlib.Path, jarOutPath: pat
     # copy stdlib
     filepath = workspacePath.joinpath("libc++_shared.so")
     distFilePath = soOutPath.joinpath(filepath.name)
-    shutil.copyfile(file, distFilePath)
+    shutil.copyfile(filepath, distFilePath)
 
 def main():
     args = getArgs()
