@@ -14,7 +14,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 #--------------------------------------------------------------------------------------------
 
 ENV ANDROID_NDK_VERSION android-ndk-r23b
-ENV ANDROID_TARGET android-21
+ENV ANDROID_TARGET android-24
 ENV ANDROID_ABI arm64-v8a
 ENV ANDROID_TOOLCHAIN_NAME aarch64-linux-android
 

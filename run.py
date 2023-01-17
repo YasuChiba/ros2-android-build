@@ -36,14 +36,10 @@ def getArgs():
 
 
 def setupRos2Java(workspacePath: pathlib.Path):
-    repoFileUrl='https://raw.githubusercontent.com/ros2-java/ros2_java/434e6f55253bfe2cb9ce34799fe548bbf4998d0e/ros2_java_android.repos'
     repoFilePath = pathlib.Path(workspacePath, "ros2_java_android.repos")
     srcDirPath = pathlib.Path(workspacePath, "src")
 
-    if not os.path.exists(repoFilePath):
-        print("download repo file from ", repoFileUrl)
-        urllib.request.urlretrieve(repoFileUrl, repoFilePath)
-
+    shutil.copyfile("./ros2_java_android.repos", repoFilePath)
     if not os.path.exists(srcDirPath):
         os.makedirs(srcDirPath)
         print('start cloning ros2java related packages')

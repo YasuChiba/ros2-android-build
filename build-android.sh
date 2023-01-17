@@ -25,8 +25,7 @@ colcon build \
     -DCOMPILE_EXAMPLES=OFF \
     -DCMAKE_FIND_ROOT_PATH="${PWD}/install" \
     -DBUILD_TESTING=OFF \
-    -DRCL_LOGGING_IMPLEMENTATION=rcl_logging_noop \
-    -DTHIRDPARTY_android-ifaddrs=FORCE
+    -DRCL_LOGGING_IMPLEMENTATION=rcl_logging_noop
 
 ## copy libc++_shared.so
 cp /opt/android/android-ndk-r23b/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/libc++_shared.so /home/user/workspace
