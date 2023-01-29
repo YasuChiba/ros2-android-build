@@ -11,7 +11,8 @@ Build [rcljava](https://github.com/ros2-java/ros2_java) for android.
 
 ## ROS2 java version  
 
-[repo](./ros2_java_android.repos)
+[repo](./ros2_java_android.repos)  
+This project uses galactic. However, due to some issues, subscriptions are not working with other galactic publishers. I recommend using humble nodes as a counterpart of the android's node.
 
 
 ## Steps to build
