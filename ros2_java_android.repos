@@ -63,6 +63,10 @@ repositories:
     type: git
     url: https://github.com/ros2/common_interfaces.git
     version: galactic
+  ros2/tf2_msgs:
+    type: git
+    url: https://github.com/YasuChiba/tf2_msgs.git
+    version: galactic
   ros2/example_interfaces:
     type: git
     url: https://github.com/ros2/example_interfaces.git
